@@ -8,6 +8,8 @@ on:
     branches: [ development ]
     types:
      - open
+  schedule:
+    - cron: '0 0 * * *'
 jobs:
  install:
   runs-on: ubuntu-latest 
