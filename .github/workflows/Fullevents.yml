@@ -1,0 +1,38 @@
+name: Full Events Pipeline
+
+# triggers - push , pull_request , issue , workflow_dispatch , fork , pull_request_review , workflow_call,schedule
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ development ]
+    types:
+     - open
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+ install:
+  runs-on: ubuntu-latest 
+  steps:
+   - name: Install maven on machine ubuntu-latest 
+     run: 'sudo apt install maven -y'
+   - name: test the maven version installed
+     run:  'mvn -version'
+ test:
+  needs: install
+  runs-on: ubuntu-latest 
+  steps:
+   - name: Test maven dependencies 
+     run: 'mvn -test'
+ build:
+  needs: [ install, test ]
+  runs-on: ubuntu-latest 
+  steps:
+   - name: Current build status
+     run: echo 'build executed successfully'
+ deploy:
+   needs: [ build, test ]
+   runs-on: ubuntu-latest 
+   steps:
+      - name: Print 
+        run: echo 'deployed sucessfully'
