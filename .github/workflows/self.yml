@@ -1,0 +1,12 @@
+name: Self
+
+on:
+ workflow_dispatch
+
+jobs:
+ self:
+  runs-on: Self-hosted
+  steps:
+   - name: Print
+     run: echo " Self hosted job"
+     
